@@ -1,2 +1,25 @@
 include ':app'
-rootProject.name='GuavaAndroidSplit'
+
+include ':guava-annotations'
+include ':guava-base'
+
+include ':guava-escape'
+include ':guava-primitives'
+include ':guava-html'
+include ':guava-xml'
+include ':guava-math'
+
+include ':guava-collect'
+include ':guava-hash'
+
+include ':guava-concurrent'
+include ':guava-cache'
+
+include ':guava-graph'
+include ':guava-io'
+include ':guava-reflect'
+include ':guava-net'
+
+include ':guava-eventbus'
+
+rootProject.name = 'GuavaAndroidSplit'

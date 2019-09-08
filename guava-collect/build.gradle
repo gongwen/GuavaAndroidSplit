@@ -1,0 +1,37 @@
+apply plugin: 'java-library'
+apply from: '../config.gradle'
+apply plugin: 'com.novoda.bintray-release'
+
+dependencies {
+    if (packageMode) {
+        implementation "${androidConfigure.LibraryGroupId}:guava-annotations:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-base:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-primitives:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-math:${androidConfigure.LibraryPublishVersion}"
+    } else {
+        implementation project(":guava-annotations")
+        implementation project(":guava-base")
+        implementation project(":guava-primitives")
+        implementation project(":guava-math")
+    }
+
+    //https://mvnrepository.com/artifact/org.checkerframework/checker-compat-qual
+    implementation "org.checkerframework:checker-compat-qual:$androidConfigure.checker_compat_qual"
+    //https://mvnrepository.com/artifact/com.google.errorprone/error_prone_annotations
+    implementation "com.google.errorprone:error_prone_annotations:$androidConfigure.error_prone_annotations"
+    //https://mvnrepository.com/artifact/com.google.j2objc/j2objc-annotations
+    implementation "com.google.j2objc:j2objc-annotations:$androidConfigure.j2objc_annotations"
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+publish {
+    //bintray注册的用户名
+    userOrg = project.ext.androidConfigure.LibraryUserOrg
+    groupId = project.ext.androidConfigure.LibraryGroupId
+    artifactId = 'guava-collect'
+    publishVersion = project.ext.androidConfigure.LibraryPublishVersion
+    desc = 'This is a guava-collect library for android'
+    website = project.ext.androidConfigure.LibraryWebsite
+}

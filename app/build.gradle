@@ -1,13 +1,15 @@
 apply plugin: 'com.android.application'
+apply from: '../config.gradle'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion this.ext.androidConfigure.compileSdkVersion
+    buildToolsVersion this.ext.androidConfigure.buildToolsVersion
     defaultConfig {
         applicationId "com.google.guava.common.sample"
-        minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion this.ext.androidConfigure.minSdkVersion
+        targetSdkVersion this.ext.androidConfigure.targetSdkVersion
+        versionCode this.ext.androidConfigure.versionCode
+        versionName this.ext.androidConfigure.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -16,12 +18,63 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation "com.android.support:appcompat-v7:$androidConfigure.supportLibraryVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    if (packageMode) {
+        implementation "${androidConfigure.LibraryGroupId}:guava-annotations:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-base:${androidConfigure.LibraryPublishVersion}"
+
+        implementation "${androidConfigure.LibraryGroupId}:guava-escape:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-primitives:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-html:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-xml:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-math:${androidConfigure.LibraryPublishVersion}"
+
+        implementation "${androidConfigure.LibraryGroupId}:guava-collect:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-hash:${androidConfigure.LibraryPublishVersion}"
+
+        implementation "${androidConfigure.LibraryGroupId}:guava-concurrent:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-cache:${androidConfigure.LibraryPublishVersion}"
+
+        implementation "${androidConfigure.LibraryGroupId}:guava-graph:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-io:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-reflect:${androidConfigure.LibraryPublishVersion}"
+        implementation "${androidConfigure.LibraryGroupId}:guava-net:${androidConfigure.LibraryPublishVersion}"
+
+        implementation "${androidConfigure.LibraryGroupId}:guava-eventbus:${androidConfigure.LibraryPublishVersion}"
+    } else {
+        implementation project(':guava-annotations')
+        implementation project(':guava-base')
+
+        implementation project(':guava-escape')
+        implementation project(':guava-primitives')
+        implementation project(':guava-html')
+        implementation project(':guava-xml')
+        implementation project(':guava-math')
+
+        implementation project(":guava-collect")
+        implementation project(':guava-hash')
+
+        implementation project(':guava-concurrent')
+        implementation project(":guava-cache")
+
+        implementation project(':guava-graph')
+        implementation project(':guava-io')
+        implementation project(':guava-reflect')
+        implementation project(':guava-net')
+
+        implementation project(':guava-eventbus')
+    }
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

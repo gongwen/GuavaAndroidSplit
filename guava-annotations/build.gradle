@@ -1,0 +1,19 @@
+apply plugin: 'java-library'
+apply from: '../config.gradle'
+apply plugin: 'com.novoda.bintray-release'
+
+dependencies {
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+publish {
+    //bintray注册的用户名
+    userOrg = project.ext.androidConfigure.LibraryUserOrg
+    groupId = project.ext.androidConfigure.LibraryGroupId
+    artifactId = 'guava-annotations'
+    publishVersion = project.ext.androidConfigure.LibraryPublishVersion
+    desc = 'This is a guava-annotations library for android'
+    website = project.ext.androidConfigure.LibraryWebsite
+}
